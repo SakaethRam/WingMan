@@ -105,7 +105,7 @@ def help_command():
         "1. 'time' - Tells the current time. "
         "2. 'open youtube' or 'youtube' - Opens YouTube in your browser. "
         "3. 'google' - Opens Google in your browser. "
-        "4. 'music' - Plays the first song from your music directory. "
+        "4. 'music' - Plays the first song from your Spotify playlist. "
         "5. 'system utilization' or 'cpu and memory' - Reports the CPU and memory usage. "
         "6. 'wait' - Pauses the assistant until you say 'start'. "
         "7. 'stop' or 'bye' - Exits the assistant. "
