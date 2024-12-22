@@ -4,6 +4,7 @@ import datetime
 import webbrowser
 import os
 import psutil  # Library to monitor system utilization
+import threading
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 
@@ -15,6 +16,7 @@ SPOTIFY_CLIENT_ID = "your_client_id"  # Replace with your Client ID
 SPOTIFY_CLIENT_SECRET = "your_client_secret"  # Replace with your Client Secret
 SPOTIFY_REDIRECT_URI = "http://localhost:8080/callback"  # Must match Redirect URI in Spotify Developer Dashboard
 
+
 # Set up Spotipy
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
     client_id=SPOTIFY_CLIENT_ID,
@@ -24,10 +26,10 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
 ))
 
 def play_spotify_playlist():
-    """Play a Spotify playlist"""
+    """Play a Spotify playlist in a separate thread."""
     try:
-        # Replace with your Spotify Playlist URI
-        playlist_uri = "spotify:playlist:your_playlist_id" #URL should be different from the redirecting url
+        # Spotify playlist URI
+        playlist_uri = "spotify:playlist:your_playlist_id"
 
         # Get the user's active device
         devices = sp.devices()
@@ -45,6 +47,10 @@ def play_spotify_playlist():
         print(f"Error with Spotify playback: {e}")
         speak("I couldn't connect to Spotify. Please check your credentials or open Spotify.")
 
+def play_music_in_background():
+    """Run the Spotify playback logic in a new thread."""
+    music_thread = threading.Thread(target=play_spotify_playlist)
+    music_thread.start()
 
 def speak(text):
     """Convert text to speech"""
@@ -105,7 +111,7 @@ def help_command():
         "1. 'time' - Tells the current time. "
         "2. 'open youtube' or 'youtube' - Opens YouTube in your browser. "
         "3. 'google' - Opens Google in your browser. "
-        "4. 'music' - Plays the first song from your Spotify playlist. "
+        "4. 'music' - Plays the songs from your Spotify playlist. "
         "5. 'system utilization' or 'cpu and memory' - Reports the CPU and memory usage. "
         "6. 'wait' - Pauses the assistant until you say 'start'. "
         "7. 'stop' or 'bye' - Exits the assistant. "
@@ -131,7 +137,8 @@ def handle_command(command):
     elif "music" in command:
         music_dir = "C:\\Users\\Username\\Music"  # Update with your music directory path
         try:
-            play_spotify_playlist()
+            music_thread = threading.Thread(target=play_spotify_playlist)
+            music_thread.start()
         except FileNotFoundError:
             speak("The music directory was not found. Please check the path.")
 
