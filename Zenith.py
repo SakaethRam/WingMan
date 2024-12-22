@@ -4,9 +4,47 @@ import datetime
 import webbrowser
 import os
 import psutil  # Library to monitor system utilization
+import spotipy
+from spotipy.oauth2 import SpotifyOAuth
 
 WAKE_WORD = "zenith"  # Change this to any other word you prefer
 is_paused = False  # Global flag to handle wait/start commands
+
+# Spotify credentials
+SPOTIFY_CLIENT_ID = "your_client_id"  # Replace with your Client ID
+SPOTIFY_CLIENT_SECRET = "your_client_secret"  # Replace with your Client Secret
+SPOTIFY_REDIRECT_URI = "http://localhost:8080/callback"  # Must match Redirect URI in Spotify Developer Dashboard
+
+# Set up Spotipy
+sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
+    client_id=SPOTIFY_CLIENT_ID,
+    client_secret=SPOTIFY_CLIENT_SECRET,
+    redirect_uri=SPOTIFY_REDIRECT_URI,
+    scope="user-read-playback-state,user-modify-playback-state,user-read-currently-playing"
+))
+
+def play_spotify_playlist():
+    """Play a Spotify playlist"""
+    try:
+        # Replace with your Spotify Playlist URI
+        playlist_uri = "spotify:playlist:your_playlist_id" #URL should be different from the redirecting url
+
+        # Get the user's active device
+        devices = sp.devices()
+        if not devices["devices"]:
+            speak("No active Spotify devices found. Please open Spotify on your device.")
+            return
+
+        # Use the first available device
+        device_id = devices["devices"][0]["id"]
+
+        # Start playback
+        sp.start_playback(device_id=device_id, context_uri=playlist_uri)
+        speak("Playing your Spotify playlist.")
+    except Exception as e:
+        print(f"Error with Spotify playback: {e}")
+        speak("I couldn't connect to Spotify. Please check your credentials or open Spotify.")
+
 
 def speak(text):
     """Convert text to speech"""
@@ -93,12 +131,7 @@ def handle_command(command):
     elif "music" in command:
         music_dir = "C:\\Users\\Username\\Music"  # Update with your music directory path
         try:
-            songs = [song for song in os.listdir(music_dir) if song.endswith((".mp3", ".wav"))]
-            if songs:
-                os.startfile(os.path.join(music_dir, songs[0]))
-                speak("Playing music")
-            else:
-                speak("No music files found.")
+            play_spotify_playlist()
         except FileNotFoundError:
             speak("The music directory was not found. Please check the path.")
 
