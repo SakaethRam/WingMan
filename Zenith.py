@@ -171,7 +171,7 @@ def main():
         elif "no" in initial_command:
             break
         else:
-            speak("I didn't catch that. Please say 'yes' or 'no'.")
+            speak("I didn't catch that.")
 
     speak("Alright. You can now give me a command.")
     while True:
