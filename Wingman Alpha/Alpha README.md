@@ -11,7 +11,7 @@ Design and implement a voice-controlled virtual assistant capable of executing t
 #### **Introduction**:
 Virtual assistants are increasingly integrated into daily tasks, providing hands-free automation for various functions. This Python-based assistant utilizes speech recognition and text-to-speech synthesis to execute commands like playing music, opening web pages, and monitoring system performance. It ensures an interactive and seamless experience by leveraging threading for concurrent operations and integrating Spotify for media playback.
 
-#### **Pre-Requisites**:  
+#### **Pre-Requisites**
 1. **Install Python**  
    Ensure that Python is installed on your system to support the execution of the assistant's script.  
 
@@ -37,7 +37,7 @@ Virtual assistants are increasingly integrated into daily tasks, providing hands
 5. **Launch Zenith**  
    Upon successful execution of the script, Zenith will begin operating, ready to assist you in automating tasks efficiently.
 
-#### **Future Advancements**:
+#### **Future Advancements (Recommended)**
 > Enhanced NLP Capabilities – Implementing NLP models like GPT or BERT for better command interpretation.
 > Home Automation Integration – Connecting with IoT devices for smart home control.
 > Multi-User Recognition – Using voice biometrics for personalized responses.
