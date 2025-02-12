@@ -34,7 +34,7 @@ Before running the project, ensure the following:
    - **Translation Model:** Google Translate API  
    - **Text-to-Speech Conversion:** Google Text-to-Speech (gTTS)  
 
-### **Future Advancements**  
+### **Future Advancements (Recommended)**  
 
 1. **Offline Functionality** – Integrating offline speech recognition and language translation models to eliminate dependency on internet-based APIs. This can be achieved using **Mozilla DeepSpeech** for offline speech recognition and **OpenNMT** for on-device language translation.  
 
