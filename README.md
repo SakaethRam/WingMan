@@ -4,6 +4,10 @@
 
 ZREX Wingman is a sophisticated virtual assistant developed to optimize task automation by utilizing the simplicity and efficiency of voice commands. It offers an intuitive solution for simplifying complex processes and enhancing user productivity.  
 
+
+![WINGMAN](https://github.com/user-attachments/assets/4752e7ac-e04e-420f-8dec-5c1e779fa52c)
+
+
 #### Pre-Requisites:  
 1. **Install Python**  
    Ensure that Python is installed on your system to support the execution of the assistant's script.  
