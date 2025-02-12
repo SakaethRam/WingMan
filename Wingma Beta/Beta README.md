@@ -4,6 +4,10 @@
 
  Wingman Beta is a sophisticated virtual assistant developed to optimize task automation by utilizing the simplicity and efficiency of voice commands. It offers an intuitive solution for simplifying complex processes and enhancing user productivity.  
 
+
+ ![WINGMAN BETA](https://github.com/user-attachments/assets/dfe6a235-1a9e-475d-bb99-d1bd90ef21b5)
+
+
 #### Pre-Requisites:  
 1. **Install Python**  
    Ensure that Python is installed on your system to support the execution of the assistant's script.  
