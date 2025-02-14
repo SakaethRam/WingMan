@@ -36,8 +36,4 @@ Virtual assistants are increasingly integrated into daily tasks, providing hands
 
 5. **Launch Zenith**  
    Upon successful execution of the script, Zenith will begin operating, ready to assist you in automating tasks efficiently.
-
-#### **Future Advancements (Recommended)**
-1. Enhanced NLP Capabilities – Implementing NLP models like GPT or BERT for better command interpretation.
-2. Home Automation Integration – Connecting with IoT devices for smart home control.
-3. Multi-User Recognition – Using voice biometrics for personalized responses.
+   
