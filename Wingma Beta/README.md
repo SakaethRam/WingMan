@@ -1,5 +1,3 @@
-### Arkin X: Arkin X proudly presents  Wingman Beta, a cutting-edge virtual assistant designed to redefine task automation and elevate user experiences.  
-
 ### Wingman Beta:  
 
 With increasing globalization, many users face difficulties in interacting with AI-powered virtual assistants due to language barriers. A seamless multilingual voice assistant is needed to allow users to speak in their native language while ensuring that the response is both spoken in the same language and subtitled in English for better understanding.
