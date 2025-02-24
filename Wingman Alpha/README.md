@@ -1,5 +1,3 @@
-### Arkin X: Arkin X proudly presents Wingman Alpha, a cutting-edge virtual assistant designed to redefine task automation and elevate user experiences.  
-
 ### Wingman Alpha:  
 
 Design and implement a voice-controlled virtual assistant capable of executing tasks such as playing music via Spotify, retrieving system utilization details, opening web pages, and responding to user queries using speech recognition. The assistant should support a wake word to initiate interactions and allow users to pause or resume its operations through voice commands.
