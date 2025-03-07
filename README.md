@@ -66,3 +66,27 @@ python wingman.py
 - For all other queries, the response will be displayed as text in the terminal.  
 
 ---
+
+## Model Details
+Check the available "Gemini Models" using the provided code snippet:  
+```python
+models = genai.list_models()
+for model in models:
+    print(model.name) 
+```
+
+---
+
+## Docker File
+
+### **1. Build Docker Image**  
+Run the following command in the directory where your `DockerFile` is located:  
+```bash
+docker build -t wingman .
+```
+
+### **2. Run the Docker container**  
+After building the image, start the container with: 
+```bash
+docker run --rm -it --device /dev/snd wingman
+```
