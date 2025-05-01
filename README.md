@@ -90,3 +90,22 @@ After building the image, start the container with:
 ```bash
 docker run --rm -it --device /dev/snd wingman
 ```
+
+---
+
+## **Contribution Guidelines**  
+Contributions are welcome. To contribute:  
+1. Fork the repository.  
+2. Create a feature branch.  
+3. Implement your changes.  
+4. Submit a pull request with a clear description of modifications.  
+
+---
+
+## License
+
+MIT License
+
+---
+
+Built by `S A M` – Building intelligence to voice.
