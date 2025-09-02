@@ -1,4 +1,4 @@
-# ZREX WingMan: Your AI Voice Wingman
+# WingMan: Your AI Voice Wingman
 
 ## Introduction  
 WingMan is an advanced AI-powered voice assistant designed to provide real-time speech recognition, language translation, and AI-generated responses using Google’s Gemini API. It acts as a conversational AI that understands multilingual inputs, translates them, and provides intelligent responses. Additionally, WingMan can generate speech responses, making it an interactive and accessible assistant.  
@@ -99,12 +99,6 @@ Contributions are welcome. To contribute:
 2. Create a feature branch.  
 3. Implement your changes.  
 4. Submit a pull request with a clear description of modifications.  
-
----
-
-## License
-
-MIT License
 
 ---
 
