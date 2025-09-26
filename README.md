@@ -1,7 +1,8 @@
-# WingMan: Your AI Voice Wingman
+# WingMan ITOps: Agentic AI for IT Operations
 
-## Introduction  
-WingMan is an advanced AI-powered voice assistant designed to provide real-time speech recognition, language translation, and AI-generated responses using Google’s Gemini API. It acts as a conversational AI that understands multilingual inputs, translates them, and provides intelligent responses. Additionally, WingMan can generate speech responses, making it an interactive and accessible assistant.  
+## Introduction
+
+**WingMan ITOps** is an agentic AI assistant designed for IT Operations, automation, and task management. It leverages a **Supervisor–Worker architecture**, **hybrid memory (short-term + FAISS long-term)**, and **priority-based scheduling** to handle IT tasks intelligently. Using OpenAI models with FastAPI, it integrates seamlessly with calendars, task managers, and IT operations systems.
 
 ---
 
@@ -9,97 +10,143 @@ WingMan is an advanced AI-powered voice assistant designed to provide real-time 
 
 ---
 
-## Key Features  
+WingMan ITOps Gist:
 
-1. **Speech Recognition** – Uses Google’s Speech Recognition API to capture and transcribe spoken words accurately.  
-2. **Multilingual Support** – Detects and translates languages automatically, ensuring a seamless conversation experience.  
-3. **AI-Powered Responses** – Integrates Google’s Gemini API to generate insightful responses based on user queries.  
-4. **Text-to-Speech Conversion** – Uses gTTS (Google Text-to-Speech) to convert AI-generated responses into natural-sounding audio.  
-5. **Interactive Voice Mode** – Saying **"WingMan"** in your input triggers an **audio response** in `response.mp3`.  
-6. **Real-Time Execution** – Works in a continuous loop, always ready to listen, process, and respond to user commands.  
+1. Understand user queries via natural language.
+2. Decompose them into atomic subtasks.
+3. Call the appropriate tools or workers (e.g., scheduling, tasking, ITOps, retrieval).
+4. Return a synthesized, context-aware final response.
 
 ---
 
-## Technologies and Libraries Used  
+## Key Features
 
-- **Speech Recognition:** `speech_recognition` (Google Speech Recognition API)  
-- **AI Response Generation:** `google-generativeai` (Google Gemini API)  
-- **Language Translation:** `googletrans` (Google Translate API)  
-- **Text-to-Speech:** `gTTS` (Google Text-to-Speech)  
-- **Regular Expressions:** `re` (for cleaning text before audio processing)  
-- **System Interaction:** `os` (for playing audio responses)  
-
----
-
-## Insights and Benefits  
-
-- **Multilingual AI Assistant** – WingMan makes AI-driven interactions accessible to people speaking different languages.  
-- **Real-Time Communication** – Enables hands-free and instant responses for users.  
-- **Seamless Translation** – Removes language barriers, allowing users to communicate effortlessly.  
-- **Smart Voice Interaction** – Enhances engagement with AI by converting text responses into speech when "WingMan" is detected.  
-- **Flexible Execution** – Works on both Windows and macOS with voice command-based activation.  
+1. **Supervisor–Worker Framework** – Central supervisor parses intent and delegates to specialized workers.
+2. **Hybrid Memory System** – Short-term rolling context + FAISS vector-based long-term memory.
+3. **Priority Scheduler** – Ensures urgent tasks (e.g., restarting services) take precedence.
+4. **ITOps Automation** – Health checks, service restarts, and system monitoring via API.
+5. **Calendar & Task Management** – Book meetings and manage tasks through connected APIs.
+6. **Context-Aware Responses** – Integrates retrieved long-term memory into final answers.
+7. **FastAPI Interface** – Provides an API surface for easy integration with existing systems.
+8. **Extendable Tools** – Simple structure to add more external integrations.
 
 ---
 
-## How to Set Up and Execute WingMan  
+## Technologies and Libraries Used
 
-### **1. Install Required Libraries**  
-Before running WingMan, install the necessary Python packages using:  
+* **Framework:** `FastAPI`, `Uvicorn`
+* **AI Models:** `openai` (Chat & Embeddings APIs)
+* **Vector Store:** `faiss-cpu` for long-term memory retrieval
+* **Utilities:** `numpy`, `pydantic`, `httpx`, `queue`, `uuid`
+* **Configuration:** `python-dotenv` for environment variables
+* **Optional TTS:** `gTTS`, `playsound` (placeholder implementation)
+
+---
+
+## Insights and Benefits
+
+* **Automated IT Operations** – Simplifies health checks, restarts, and monitoring.
+* **Intelligent Scheduling** – Books meetings or creates tasks with contextual awareness.
+* **Scalable Agent Design** – Easily extendable to new workers and APIs.
+* **Prioritized Task Handling** – Critical operations are handled first via a priority queue.
+* **Persistent Knowledge** – Retains and recalls preferences, policies, and historical events.
+
+---
+
+## Setup and Execution
+
+### **1. Install Dependencies**
+
 ```bash
-pip install speechrecognition google-generativeai googletrans==4.0.0-rc1 gtts
+pip install fastapi uvicorn pydantic[dotenv] openai faiss-cpu numpy httpx python-dotenv
+# Optional (for demo TTS)
+pip install gTTS playsound
 ```
 
-### **2. Set Up Google Gemini API**  
-Replace `"<API KEYS>"` with your Google Gemini API key in the script:  
-```python
-genai.configure(api_key="<YOUR_GEMINI_API_KEY>")
-```
+### **2. Configure Environment Variables**
 
-### **3. Run WingMan**  
-Save the script as `wingman.py` and execute:  
+Create a `.env` file or export variables directly:
+
 ```bash
-python wingman.py
+export OPENAI_API_KEY="sk-..."
+# Optional demo API tokens:
+export CALENDAR_API_BASE="https://example.com/calendar"
+export TASK_API_BASE="https://example.com/tasks"
+export ITOPS_API_BASE="https://example.com/itops"
 ```
 
-### **4. Activate Audio Response Mode**  
-- If your input contains **"WingMan"**, the AI response will be **converted to speech** and saved as `response.mp3`, which will then be played.  
-- For all other queries, the response will be displayed as text in the terminal.  
+### **3. Run the Application**
 
----
-
-## Model Details
-Check the available "Gemini Models" using the provided code snippet:  
-```python
-models = genai.list_models()
-for model in models:
-    print(model.name) 
-```
-
----
-
-## Docker File
-
-### **1. Build Docker Image**  
-Run the following command in the directory where your `DockerFile` is located:  
 ```bash
-docker build -t wingman .
+uvicorn wingman_app:app --reload --port 8000
 ```
 
-### **2. Run the Docker container**  
-After building the image, start the container with: 
+### **4. Example API Usage**
+
+Send a chat request:
+
 ```bash
-docker run --rm -it --device /dev/snd wingman
+curl -X POST http://127.0.0.1:8000/chat \
+  -H "Content-Type: application/json" \
+  -d '{"text": "Check health of payments-api"}'
+```
+
+Response:
+
+```json
+{
+  "session_id": "123e4567-e89b-12d3-a456-426614174000",
+  "final": "The payments-api service is healthy and running normally.",
+  "tool_calls": [{"name": "check_system_health", "args": {"service": "payments-api"}}],
+  "tool_results": [{"ok": true, "provider": "itops", "data": {"status": "healthy"}}],
+  "retrieved_memory": ["Critical service: payments-api. Restart only with confirmation."]
+}
 ```
 
 ---
 
-## **Contribution Guidelines**  
-Contributions are welcome. To contribute:  
-1. Fork the repository.  
-2. Create a feature branch.  
-3. Implement your changes.  
-4. Submit a pull request with a clear description of modifications.  
+## API Endpoints
+
+### `POST /chat`
+
+* **Input:**
+
+```json
+{
+  "session_id": "optional-session-id",
+  "text": "Restart the payments-api service"
+}
+```
+
+* **Output:**
+
+```json
+{
+  "session_id": "...",
+  "final": "The payments-api service has been restarted successfully.",
+  "tool_calls": [...],
+  "tool_results": [...],
+  "retrieved_memory": [...]
+}
+```
 
 ---
 
-Built by `S A M` – Building intelligence to voice.
+## Extending WingMan ITOps
+
+* **Add new tools** by defining functions (`tool_...`) for external APIs.
+* **Add new workers** by subclassing `BaseWorker` and implementing the `run` method.
+* **Modify supervisor behavior** by updating the system prompt or tool specifications.
+
+---
+
+## Contribution Guidelines
+
+1. Fork the repository.
+2. Create a new feature branch.
+3. Add or improve functionality.
+4. Submit a pull request with a clear description of changes.
+
+---
+
+Built by **S A M** – Intelligent automation for IT Operations.
