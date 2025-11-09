@@ -1,20 +1,40 @@
-FROM python:3.10-slim
+# Dockerfile – WingMan X (Voice AI Assistant)
+# ----------------------------------------------------
+# Base image: Python 3.11 slim (lightweight, secure)
+FROM python:3.11-slim
 
-# Set the working directory
+# Set working directory
 WORKDIR /app
 
-# Install dependencies
+# Install system dependencies
+# - alsa-utils: for audio playback (pygame uses ALSA)
+# - portaudio19-dev, libffi-dev: for PyAudio (speech_recognition)
+# - gcc, build-essential: for compiling wheels if needed
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    alsa-utils \
+    portaudio19-dev \
+    libffi-dev \
+    gcc \
+    build-essential \
+    pulseaudio \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy requirements first (leverages Docker layer caching)
 COPY requirements.txt .
+
+# Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the application files
-COPY . .
+# Copy application code
+COPY wingmanx.py .
+COPY "WingMan X StudioCode.py" .
 
-# Set environment variables (optional)
-ENV GOOGLE_APPLICATION_CREDENTIALS="/app/your_google_credentials.json"
+# Create non-root user for security
+RUN useradd -m appuser
+USER appuser
 
-# Expose necessary ports (if needed)
-EXPOSE 5000
+# Expose no ports (voice-only CLI app)
 
-# Command to run the application
-CMD ["python", "WingMan.py"]
+# Default command: run the test script
+# Override with: docker run ... python "WingMan X StudioCode.py"
+CMD ["python", "WingMan X StudioCode.py"]
