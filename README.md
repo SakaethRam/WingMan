@@ -2,7 +2,9 @@
 
 ## Introduction
 
-**WingMan ITOps** is an agentic AI assistant designed for IT Operations, automation, and task management. It leverages a **Supervisor–Worker architecture**, **hybrid memory (short-term + FAISS long-term)**, and **priority-based scheduling** to handle IT tasks intelligently. Using OpenAI models with FastAPI, it integrates seamlessly with calendars, task managers, and IT operations systems.
+**WingMan X** is a powerful, voice-driven AI assistant built for strategy tracking, task management, and intelligent conversation. It combines **Gemini AI**, **CRM Integration**, **persistent memory**, and **multilingual speech** (English & Hindi) into a seamless, hands-free productivity tool.
+
+Whether you're logging deliverables, recalling past decisions, or brainstorming with an AI || All By Voice || WingMan X: Keeps You In Flow
 
 ---
 
@@ -10,134 +12,115 @@
 
 ---
 
-WingMan ITOps Gist:
-
-1. Understand user queries via natural language.
-2. Decompose them into atomic subtasks.
-3. Call the appropriate tools or workers (e.g., scheduling, tasking, ITOps, retrieval).
-4. Return a synthesized, context-aware final response.
-
----
-
 ## Key Features
 
-1. **Supervisor–Worker Framework** – Central supervisor parses intent and delegates to specialized workers.
-2. **Hybrid Memory System** – Short-term rolling context + FAISS vector-based long-term memory.
-3. **Priority Scheduler** – Ensures urgent tasks (e.g., restarting services) take precedence.
-4. **ITOps Automation** – Health checks, service restarts, and system monitoring via API.
-5. **Calendar & Task Management** – Book meetings and manage tasks through connected APIs.
-6. **Context-Aware Responses** – Integrates retrieved long-term memory into final answers.
-7. **FastAPI Interface** – Provides an API surface for easy integration with existing systems.
-8. **Extendable Tools** – Simple structure to add more external integrations.
+1. **Voice-First Interaction:** Speak naturally; get spoken responses.
+2. **Multilingual Support:** English & Hindi with real-time Devanagari conversion.
+3. **Airtable CRM Sync:** Add, update, and fetch deliverables via voice commands.
+4. **Persistent Memory:** Remembers chat history, language, and mode across sessions.
+5. **Smart Response Caching:** Uses TF-IDF to reuse past answers (saves API calls).
+6. **Developer & User Modes:** Toggle debug logs and command visibility.
+7. **Chat History Tools:** Show, search, and export conversation logs.
+8. **Auto CRM Updates:** Periodic refresh of latest tasks.
+9. **Offline Graceful Degradation:** Handles no-internet scenarios smoothly.
 
 ---
 
-## Technologies and Libraries Used
+## Technologies and Framework
 
-* **Framework:** `FastAPI`, `Uvicorn`
-* **AI Models:** `openai` (Chat & Embeddings APIs)
-* **Vector Store:** `faiss-cpu` for long-term memory retrieval
-* **Utilities:** `numpy`, `pydantic`, `httpx`, `queue`, `uuid`
-* **Configuration:** `python-dotenv` for environment variables
-* **Optional TTS:** `gTTS`, `playsound` (placeholder implementation)
-
----
-
-## Insights and Benefits
-
-* **Automated IT Operations** – Simplifies health checks, restarts, and monitoring.
-* **Intelligent Scheduling** – Books meetings or creates tasks with contextual awareness.
-* **Scalable Agent Design** – Easily extendable to new workers and APIs.
-* **Prioritized Task Handling** – Critical operations are handled first via a priority queue.
-* **Persistent Knowledge** – Retains and recalls preferences, policies, and historical events.
+| Category              | Technology / Library                                   |
+|-----------------------|--------------------------------------------------------|
+| **Framework**         | Custom Python engine (`wingmanx.py`)                   |
+| **AI Model**          | Google Gemini (`gemini-2.0-flash`)                     |
+| **Vector Store**      | Scikit-learn `TfidfVectorizer` + `cosine_similarity`   |
+| **Speech Recognition**| `speech_recognition` + Google Web API                  |
+| **Text-to-Speech**    | `gTTS` (Google Text-to-Speech)                         |
+| **Audio Playback**    | `pygame.mixer`                                         |
+| **CRM Integration**   | Airtable API (REST)                                    |
+| **Translation**       | `googletrans`                                          |
+| **Utilities**         | `json`, `requests`, `re`, `datetime`, `tempfile`, `os` |
+| **Configuration**     | API keys via `WingManX()` constructor                  |
+| **Optional TTS**      | Falls back to text print if audio fails                |
 
 ---
 
 ## Setup and Execution
 
-### **1. Install Dependencies**
-
+### 1. Clone the Repository
 ```bash
-pip install fastapi uvicorn pydantic[dotenv] openai faiss-cpu numpy httpx python-dotenv
-# Optional (for demo TTS)
-pip install gTTS playsound
+git clone https://github.com/yourusername/WingMan-X.git
+cd WingMan-X
 ```
 
-### **2. Configure Environment Variables**
+### **2. Configure Environment Variables and Get API Keys**
 
-Create a `.env` file or export variables directly:
+1. Gemini API Key: Google AI Studio
+2. Airtable Personal Access Token: Airtable → Account → Personal Access Tokens
+3. Airtable Base ID: Found in your base URL → appXXXXXXXXXXXXXX
+4. Create a `.env` file or export variables directly:
 
 ```bash
 export OPENAI_API_KEY="sk-..."
-# Optional demo API tokens:
-export CALENDAR_API_BASE="https://example.com/calendar"
-export TASK_API_BASE="https://example.com/tasks"
-export ITOPS_API_BASE="https://example.com/itops"
+export Gemini_API ="<GEMINI_API_KEYS>"
+export Airtable Personal Access Token ="<PERSONAL_ACCESS_TOKEN>"
+export Airtable Base ID ="<BASE_ID>"
 ```
 
-### **3. Run the Application**
 
+### **3. Run the Assistant [Test the Advanced Engine]**
+
+Use the provided WingMan X StudioCode.py to instantly launch and test the full WingMan X Engine:
 ```bash
-uvicorn wingman_app:app --reload --port 8000
+# WingMan X StudioCode.py
+from wingmanx import WingManX
+
+WingManX(
+    gemini_key="your-gemini-api-key",
+    airtable_key="your-airtable-pat",
+    base_id="appXXXXXXXXXXXXXX"
+).run()
 ```
+>This is your sandbox, plug in your keys and start talking. No setup beyond dependencies and keys.
 
-### **4. Example API Usage**
+---
 
-Send a chat request:
+## Project Structure
 
-```bash
-curl -X POST http://127.0.0.1:8000/chat \
-  -H "Content-Type: application/json" \
-  -d '{"text": "Check health of payments-api"}'
-```
-
-Response:
-
-```json
-{
-  "session_id": "123e4567-e89b-12d3-a456-426614174000",
-  "final": "The payments-api service is healthy and running normally.",
-  "tool_calls": [{"name": "check_system_health", "args": {"service": "payments-api"}}],
-  "tool_results": [{"ok": true, "provider": "itops", "data": {"status": "healthy"}}],
-  "retrieved_memory": ["Critical service: payments-api. Restart only with confirmation."]
-}
+```Text
+WingMan-X/
+├── wingmanx.py              # Core engine (advanced model)
+├── WingMan X StudioCode.py  # Test runner (this file)
+├── Memory.json              # Auto-generated: chat history & settings
+├── requirements.txt
+└── README.md
 ```
 
 ---
 
-## API Endpoints
+## Voice Commands
 
-### `POST /chat`
-
-* **Input:**
-
-```json
-{
-  "session_id": "optional-session-id",
-  "text": "Restart the payments-api service"
-}
-```
-
-* **Output:**
-
-```json
-{
-  "session_id": "...",
-  "final": "The payments-api service has been restarted successfully.",
-  "tool_calls": [...],
-  "tool_results": [...],
-  "retrieved_memory": [...]
-}
-```
+| Action                | Say…                                                   |
+|-----------------------|--------------------------------------------------------|
+| **Switch mode**       | "mode" or "developer" / "user"                         |
+| **Change language**   | "language"                                             |
+| **Add deliverable**   | "add update: Launch MVP"                               |
+| **Update last task**  | "update last: delayed to Friday"                       |
+| **Get all updates**   | "update" or "status"                                   |
+| **Show chat history** | "show history"                                         |
+| **Search past chat**  | "search: MVP"                                          |
+| **Export chat**       | "export chat"                                          |
+| **Exit**              | "bye" or "exit"                                        |
 
 ---
 
-## Extending WingMan ITOps
+## Important Notes
 
-* **Add new tools** by defining functions (`tool_...`) for external APIs.
-* **Add new workers** by subclassing `BaseWorker` and implementing the `run` method.
-* **Modify supervisor behavior** by updating the system prompt or tool specifications.
-
+1. **Internet Required** for speech recognition, TTS, Gemini, and Airtable.
+2. **Microphone Access** must be granted.
+3. Hindi TTS uses `gTTS` with `tld='co.in'` for natural Indian accent.
+4. **Memory Cleanup:** Old messages (>200) are auto-trimmed.
+5. **Developer Mode** shows debug logs and command hints in console.
+   
 ---
 
 ## Contribution Guidelines
