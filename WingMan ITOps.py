@@ -617,14 +617,3 @@ if not memory.payloads:
     memory.add_long("Critical service: payments-api. Restart only with confirmation.", meta={"type": "policy"})
     memory.add_long("Pending project: Automate weekly on-call report generation.", meta={"type": "task"})
 
-
-# =========================
-# Notes
-# =========================
-# - This file implements a minimal, production-lean skeleton of the described system:
-#   Supervisor–Worker decomposition, hybrid memory (short + FAISS long-term), priority scheduler,
-#   dynamic tool selection (OpenAI function calling), and a FastAPI surface.
-# - Workers call external services via async HTTP; swap example URLs with real integrations.
-# - For multi-agent frameworks (LangChain / CrewAI), you can wrap each Worker with an Agent class
-#   and/or use their task orchestration primitives in place of the lightweight scheduler above.
-# - Add authentication, rate limiting, observability (traces/metrics), and retries for production use.
