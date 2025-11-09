@@ -1,5 +1,5 @@
 # --------------------------------------------------------------
-# BASIC WingMan – voice-controlled Gemini chat only
+# BASIC WingMan X: Voice AI
 # --------------------------------------------------------------
 import speech_recognition as sr
 import google.generativeai as genai
@@ -69,4 +69,5 @@ if __name__ == "__main__":
 
         reply = gemini_reply(user)
         print(f"WingMan X: {reply}")
+
         speak(reply)
