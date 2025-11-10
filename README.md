@@ -48,7 +48,7 @@ Whether you're logging deliverables, recalling past decisions, or brainstorming 
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/yourusername/WingMan-X.git
+git clone "https://github.com/SakaethRam/WingMan.git"
 cd WingMan-X
 ```
 
